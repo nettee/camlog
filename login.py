@@ -11,11 +11,19 @@ def login():
         password = j['password']
     res = requests.post('http://p.nju.edu.cn/portal_io/login', 
             data = {'username': username, 'password': password})
-    print(res.text)
+    data = res.json()
+    reply = {
+        'code': data['reply_code'],
+        'msg': data['reply_msg']
+    }
+    isSuccess = reply['code'] in (1, 6)
+    reply_string = '[{code}] {msg}'.format(**reply)
+    return isSuccess, reply_string
 
 def logout():
     res = requests.post('http://p.nju.edu.cn/portal_io/logout')
     print(res.text)
 
 if __name__ == '__main__':
-    login()
+    isSuccess, reply_string = login()
+    print(reply_string)
