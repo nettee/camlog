@@ -3,4 +3,5 @@ __pycache__/
 *.log
 password.json
 
+*.out
 *.swp
